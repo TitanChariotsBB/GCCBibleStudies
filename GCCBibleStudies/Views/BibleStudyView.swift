@@ -9,10 +9,10 @@ import SwiftUI
 
 struct BibleStudyView: View {
     
-    var name: String = "Bible Study Name"
-    var location: String = "Location"
-    var meetingTime: String = "Meeting Time"
-    var category: String = "Category"
+    var name: String = "Romans Bible Study"
+    var location: String = "Hopeman 325"
+    var meetingTime: String = "7am on Monday"
+    var category: String = "Men's"
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,7 +27,7 @@ struct BibleStudyView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.blue).frame(width: 80, height: 30)
-                        Text("Join").foregroundStyle(.white)
+                        Text("Join").bold().foregroundStyle(.white)
                     }
                 }
                 
@@ -37,7 +37,7 @@ struct BibleStudyView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.blue).frame(width: 100, height: 30)
-                        Text("Details").foregroundStyle(.white)
+                        Text("Details").bold().foregroundStyle(.white)
                     }
                 }
                 

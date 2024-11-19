@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct BibleStudyListView: View {
+    @State var searchText: String = ""
+    @State var myStudies: Bool = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            Text("Searching for \(searchText)").navigationTitle("GCC Bible Studies")
+            Toggle(isOn: $myStudies) {
+                Text("My Studies")
+            }
+            ScrollView {
+                ForEach(0..<5) { idx in
+                    BibleStudyView()
+                }
+            }
+        }.searchable(text: $searchText)
     }
 }
 

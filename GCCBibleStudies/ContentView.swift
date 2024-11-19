@@ -15,8 +15,6 @@ struct ContentView: View {
                 Text("Bible Studies")
             }
             
-            
-            
             CreateNewBSView().tabItem {
                 Image(systemName: "plus")
                 Text("New Bible Study")
