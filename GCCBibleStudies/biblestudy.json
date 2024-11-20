@@ -1,0 +1,58 @@
+/* Bible Study Table */
+[
+    {
+        "name":"Romans Bible Study",
+        "theme":"God is not a man, that he should lie; neither the son of man, that he should repent: hath he said, and shall he not do it? or hath he spoken, and shall he not make it good?",
+        "bookofthebible":"Romans",
+        "id":0
+        "membercount":7,
+        "members":[1,4,3,6,7,8,14],
+        "locations": [{
+            "name":"Hopeman 325",
+            "latitude":41.1558,
+            "longitude":80.0815
+        },
+        0,
+        /*...*/],
+        "preferredbibleversion":"KJV",
+        "coverimage":"someimage.jpg",
+        "weektimes":[{"Mon":"7am"},{"Wed":"7am"},{"Fri":"6pm"}]
+        "category":"Men's"
+        "currentreading":"Romans 8"
+        "memory verses":["Romans-8:28","Numbers-23:19"]
+        "reoccursevery":"Week"
+    },
+    
+    
+]
+
+/* Location */
+[
+    {
+        "id":0,
+        "name":"Ket Rec"
+        "latitude":41.1558,
+        "longitude":80.0815,
+    }
+    
+]
+
+/* User Table */
+[
+    {
+        "username":"natekuhns",
+        "passwordhash":"fdjweioqeqn428h42newo20df30",
+        "name":"Nate Kuhns",
+        "id":0,
+        "friends":[1,2,5],
+        "phonenumber":null,
+        "phonenumberpublic":false,
+        "telegram":null,
+        "telegrampublic":false,
+        "profilepic":"someimage.png"
+        "preferredbibleversion":"KJV"
+    },
+    
+    /*...*/
+    
+]
