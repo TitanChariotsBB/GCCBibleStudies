@@ -19,7 +19,7 @@ struct BibleStudyListView: View {
             }.padding()
             ScrollView {
                 ForEach(VM.bibleStudies) { bs in
-                    BibleStudyView(name: bs.title, description: bs.description, location: bs.location, day: bs.day, time: bs.time, category: bs.category)
+                    BibleStudyView(name: bs.title, description: bs.description, bookOfTheBible: bs.bookOfTheBible, location: bs.location, day: bs.day, time: bs.time, category: bs.category)
                 }
             }
         }.searchable(text: $searchText)

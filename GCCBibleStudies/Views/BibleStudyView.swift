@@ -13,6 +13,7 @@ struct BibleStudyView: View {
     
     var name: String
     var description: String
+    var bookOfTheBible: String
     var location: String
     var day: String
     var time: Date
@@ -25,7 +26,8 @@ struct BibleStudyView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(name).font(.largeTitle).bold().padding(.bottom, 5)
-            Text(description).font(.title2).padding(.bottom, 5)
+            Text(description).font(.title2)
+            Text(bookOfTheBible).font(.title2).padding(.bottom, 5)
             Text(location).font(.title2)
             Text(meetingTime).font(.title2)
             Text(category).font(.title2)
@@ -62,5 +64,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", location: "Hopeman 325", day: "Tuesday", time: Date(), category: "Men's").environmentObject(ViewModel())
+    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", location: "Hopeman 325", day: "Tuesday", time: Date(), category: "Men's").environmentObject(ViewModel())
 }
