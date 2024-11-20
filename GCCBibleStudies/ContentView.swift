@@ -9,17 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView {
-            BibleStudyListView().tabItem {
-                Image(systemName: "list.bullet")
-                Text("Bible Studies")
-            }
-            
-            CreateNewBSView().tabItem {
-                Image(systemName: "plus")
-                Text("New Bible Study")
-            }
-        }
+        LoginView()
     }
 }
 
