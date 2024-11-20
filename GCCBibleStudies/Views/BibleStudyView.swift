@@ -9,14 +9,21 @@ import SwiftUI
 
 struct BibleStudyView: View {
     
-    var name: String = "Romans Bible Study"
-    var location: String = "Hopeman 325"
-    var meetingTime: String = "7am on Monday"
-    var category: String = "Men's"
+    var name: String
+    var description: String
+    var location: String
+    var day: String
+    var time: Date
+    
+    var meetingTime: String {
+        "\(time.formatted(date: .omitted, time: .shortened)) on \(day)s"
+    }
+    var category: String
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(name).font(.largeTitle).bold()
+            Text(name).font(.largeTitle).bold().padding(.bottom, 5)
+            Text(description).font(.title2).padding(.bottom, 5)
             Text(location).font(.title2)
             Text(meetingTime).font(.title2)
             Text(category).font(.title2)
@@ -49,5 +56,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView()
+    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", location: "Hopeman 325", day: "Tuesday", time: Date(), category: "Men's").environmentObject(ViewModel())
 }

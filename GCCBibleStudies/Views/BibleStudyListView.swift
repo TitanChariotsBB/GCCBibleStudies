@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BibleStudyListView: View {
+    @EnvironmentObject var VM: ViewModel
+    
     @State var searchText: String = ""
     @State var myStudies: Bool = false
     var body: some View {
@@ -16,8 +18,8 @@ struct BibleStudyListView: View {
                 Text("Show only studies I've joied")
             }.padding()
             ScrollView {
-                ForEach(0..<5) { idx in
-                    BibleStudyView()
+                ForEach(VM.bibleStudies) { bs in
+                    BibleStudyView(name: bs.title, description: bs.description, location: bs.location, day: bs.day, time: bs.time, category: bs.category)
                 }
             }
         }.searchable(text: $searchText)
@@ -25,5 +27,5 @@ struct BibleStudyListView: View {
 }
 
 #Preview {
-    BibleStudyListView()
+    BibleStudyListView().environmentObject(ViewModel())
 }

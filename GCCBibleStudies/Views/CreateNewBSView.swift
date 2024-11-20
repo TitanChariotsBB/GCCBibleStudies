@@ -89,5 +89,5 @@ struct CreateNewBSView: View {
 }
 
 #Preview {
-    CreateNewBSView()
+    CreateNewBSView().environmentObject(ViewModel())
 }
