@@ -9,6 +9,8 @@ import SwiftUI
 
 struct BibleStudyView: View {
     
+    @State var joined: Bool = false
+    
     var name: String
     var description: String
     var location: String
@@ -29,12 +31,16 @@ struct BibleStudyView: View {
             Text(category).font(.title2)
             HStack {
                 Button {
-                    // onClick
+                    joined.toggle()
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.blue).frame(width: 80, height: 30)
-                        Text("Join").bold().foregroundStyle(.white)
+                        if joined {
+                            Text("Joined").bold().foregroundStyle(.white)
+                        } else {
+                            Text("Join").bold().foregroundStyle(.white)
+                        }
                     }
                 }
                 
