@@ -9,10 +9,22 @@ import SwiftUI
 
 struct CreateNewBSView: View {
     
+    enum Days: String, CaseIterable {
+        case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+    }
+    
+    enum Categories: String, CaseIterable {
+        case men, women, all
+    }
+    
     @State var name: String = ""
     @State var location: String = ""
-    @State var meetingTime: String = ""
-    @State var category: String = ""
+    
+    @State var date: Date = Date()
+    
+    @State var day: Days = .monday
+    
+    @State var category: Categories = .all
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,11 +36,28 @@ struct CreateNewBSView: View {
             TextField(text: $location) {
                 Text("Location on campus")
             }
-            TextField(text: $meetingTime) {
-                Text("Meeting time")
+            HStack {
+                Text("Meeting day: ")
+                Picker("Day", selection: $day) {
+                    Text("Monday").tag(Days.monday)
+                    Text("Tuesday").tag(Days.tuesday)
+                    Text("Wednesday").tag(Days.wednesday)
+                    Text("Thursday").tag(Days.thursday)
+                    Text("Friday").tag(Days.friday)
+                    Text("Saturday").tag(Days.saturday)
+                    Text("Sunday").tag(Days.sunday)
+                }
+                DatePicker("time: ", selection: $date, displayedComponents: [.hourAndMinute])
+                Spacer()
             }
-            TextField(text: $category) {
-                Text("Category")
+            
+            HStack {
+                Text("Category: ")
+                Picker("Category", selection: $category) {
+                    Text("Men's").tag(Categories.men)
+                    Text("Women's").tag(Categories.women)
+                    Text("All").tag(Categories.all)
+                }
             }
             
             HStack {

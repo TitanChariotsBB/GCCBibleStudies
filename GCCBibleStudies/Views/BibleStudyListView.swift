@@ -12,10 +12,9 @@ struct BibleStudyListView: View {
     @State var myStudies: Bool = false
     var body: some View {
         NavigationStack {
-            Text("Searching for \(searchText)").navigationTitle("GCC Bible Studies")
             Toggle(isOn: $myStudies) {
-                Text("My Studies")
-            }
+                Text("Show only studies I've joied")
+            }.padding()
             ScrollView {
                 ForEach(0..<5) { idx in
                     BibleStudyView()
