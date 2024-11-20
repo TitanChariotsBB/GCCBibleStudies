@@ -12,6 +12,7 @@ struct BibleStudy: Identifiable, Decodable {
     var title: String
     var location: String
     var description: String
+    var bookOfTheBible: String
     var category: String
     var time: Date
     var day: String

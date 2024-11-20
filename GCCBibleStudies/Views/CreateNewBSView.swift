@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CreateNewBSView: View {
+    @EnvironmentObject var VM: ViewModel
     
     enum Days: String, CaseIterable {
         case monday, tuesday, wednesday, thursday, friday, saturday, sunday
@@ -19,6 +20,8 @@ struct CreateNewBSView: View {
     
     @State var name: String = ""
     @State var location: String = ""
+    @State var description: String = ""
+    @State var bookOfTheBible: String = ""
     
     @State var date: Date = Date()
     
@@ -32,6 +35,12 @@ struct CreateNewBSView: View {
             Text("Enter details below:")
             TextField(text: $name) {
                 Text("Bible study name")
+            }
+            TextField(text: $description) {
+                Text("Description")
+            }
+            TextField(text: $bookOfTheBible) {
+                Text("Book of the Bible")
             }
             TextField(text: $location) {
                 Text("Location on campus")
@@ -63,7 +72,7 @@ struct CreateNewBSView: View {
             HStack {
                 Spacer()
                 Button {
-                    // onClick
+                    VM.bibleStudies.append(BibleStudy(title: name, location: location, description: description, bookOfTheBible: bookOfTheBible, category: category.rawValue, time: date, day: day.rawValue))
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
