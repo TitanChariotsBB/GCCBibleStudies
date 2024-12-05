@@ -17,3 +17,11 @@ struct BibleStudy: Identifiable, Decodable {
     var time: String
     var day: String
 }
+
+struct User: Identifiable, Decodable {
+    var id: Int
+    var username: String
+    var passwordHash: String
+    var fname: String
+    var lname: String
+}

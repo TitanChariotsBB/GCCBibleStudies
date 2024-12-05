@@ -24,6 +24,7 @@ class MongoDBManager {
     
     func getBibleStudies() async -> [BibleStudy] {
         if db == nil {
+            print("Error: database is nil")
             return []
         }
         
@@ -55,5 +56,43 @@ class MongoDBManager {
         }
     }
     
+    func getUser(username: String, passwordHash: String) async -> User? {
+        if db == nil {
+            print("Error: database is nil")
+            return nil
+        }
+        
+        let usersCollection = db!["Users"]
+        
+        do {
+            let user = try await usersCollection.findOne(["username": username, "passwordHash": passwordHash], as: User.self)
+            
+            if user == nil {
+                print("Could not find \(username)")
+                return nil
+            } else {
+                return user!
+            }
+        } catch {
+            print("Error finding user \(username): \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func createUser(user: User) async {
+        if db == nil {
+            print("Error: database is nil")
+        }
+        
+        let usersCollection = db!["Users"]
+        
+        let newUser: Document = ["id": user.id, "username": user.username, "passwordHash": user.passwordHash, "fname": user.fname, "lname": user.lname]
+        
+        do {
+            try await usersCollection.insert(newUser)
+        } catch {
+            print("Error inserting bible study: \(error.localizedDescription)")
+        }
+    }
     
 }
