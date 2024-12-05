@@ -18,8 +18,8 @@ struct BibleStudyListView: View {
                 Text("Show only studies I've joied")
             }.padding()
             ScrollView {
-                ForEach(VM.bibleStudies) { bs in
-                    BibleStudyView(name: bs.title, description: bs.description, bookOfTheBible: bs.bookOfTheBible, location: bs.location, day: bs.day, time: bs.time, category: bs.category)
+                ForEach(VM.bibleStudies) { bibleStudy in
+                    BibleStudyView(bs: bibleStudy)
                 }
             }
         }.searchable(text: $searchText)

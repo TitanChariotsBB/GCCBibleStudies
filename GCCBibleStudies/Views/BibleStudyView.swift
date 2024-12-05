@@ -11,26 +11,20 @@ struct BibleStudyView: View {
     
     @State var joined: Bool = false
     
-    var name: String
-    var description: String
-    var bookOfTheBible: String
-    var location: String
-    var day: String
-    var time: String
+    var bs: BibleStudy
     
     var meetingTime: String {
-        "\(time) on \(day)s"
+        "\(bs.time) on \(bs.day)s"
     }
-    var category: String
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(name).font(.largeTitle).bold().padding(.bottom, 5)
-            Text(description).font(.title2)
-            Text(bookOfTheBible).font(.title2).padding(.bottom, 5)
-            Text(location).font(.title2)
+            Text(bs.title).font(.largeTitle).bold().padding(.bottom, 5)
+            Text(bs.description).font(.title2)
+            Text(bs.bookOfTheBible).font(.title2).padding(.bottom, 5)
+            Text(bs.location).font(.title2)
             Text(meetingTime).font(.title2)
-            Text(category).font(.title2)
+            Text(bs.category).font(.title2)
             HStack {
                 Button {
                     joined.toggle()
@@ -64,5 +58,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", location: "Hopeman 325", day: "Tuesday", time: "6:00 PM", category: "Men's").environmentObject(ViewModel())
+    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday")).environmentObject(ViewModel())
 }

@@ -72,7 +72,16 @@ struct CreateNewBSView: View {
             HStack {
                 Spacer()
                 Button {
-                    VM.createNewBibleStudy(bibleStudy: BibleStudy(id: Int.random(in: 0..<1000000), title: name, location: location, description: description, bookOfTheBible: bookOfTheBible, category: category.rawValue, time: date.formatted(date: .omitted, time: .shortened), day: day.rawValue))
+                    VM.createNewBibleStudy(bibleStudy: BibleStudy(
+                        id: Int.random(in: 0..<1000000),
+                        title: name,
+                        location: location,
+                        description: description,
+                        bookOfTheBible: bookOfTheBible,
+                        category: category.rawValue,
+                        time: date.formatted(date: .omitted, time: .shortened),
+                        day: day.rawValue
+                    ))
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
