@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CreateNewAccount: View {
     
+    @AppStorage("needsAccount") var needsAccount: Bool?
+    
     @EnvironmentObject var VM: ViewModel
     
     @State var username: String = ""
@@ -17,31 +19,54 @@ struct CreateNewAccount: View {
     @State var fname: String = ""
     @State var lname: String = ""
     
+    var passwordsMatch: Bool { password == confirmPassword }
+    
     var body: some View {
         VStack {
             Text("Welcome to GCC Bible Studies!")
             Text("Create an account")
             TextField(text: $username) {
                 Text("New username")
-            }
-            TextField(text: $password) {
+            }.textFieldStyle(.roundedBorder)
+                .padding(5)
+                .frame(width:360)
+                .autocapitalization(.none)
+                .autocorrectionDisabled()
+            SecureField(text: $password) {
                 Text("New password")
-            }
-            TextField(text: $confirmPassword) {
+            }.textFieldStyle(.roundedBorder)
+                .padding(5)
+                .frame(width:360)
+                .autocapitalization(.none)
+                .autocorrectionDisabled()
+            SecureField(text: $confirmPassword) {
                 Text("Confirm password")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .padding(5)
+                .frame(width:360)
+                .autocapitalization(.none)
+                .autocorrectionDisabled()
             TextField(text: $fname) {
                 Text("First name")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .padding(5)
+                .frame(width:360)
+                .autocorrectionDisabled()
             TextField(text: $lname) {
                 Text("Last name")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .padding(5)
+                .frame(width:360)
+                .autocorrectionDisabled()
             Button {
                 VM.createNewUser(username: username, password: password, fname: fname, lname: lname)
+                
+                needsAccount = false
+                
             } label: {
                 Text("Create account")
-            }
-        }
+            }.disabled(!passwordsMatch)
+        }.padding(20)
     }
 }
 

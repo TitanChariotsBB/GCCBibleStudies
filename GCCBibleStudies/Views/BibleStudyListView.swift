@@ -14,6 +14,9 @@ struct BibleStudyListView: View {
     @State var myStudies: Bool = false
     var body: some View {
         NavigationStack {
+            if VM.currentUser != nil {
+                Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold()
+            }
             Toggle(isOn: $myStudies) {
                 Text("Show only studies I've joied")
             }.padding()

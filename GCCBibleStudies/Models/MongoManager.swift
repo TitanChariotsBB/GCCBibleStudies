@@ -32,7 +32,6 @@ class MongoDBManager {
         
         do {
             let bibleStudies: [BibleStudy] = try await bibleStudiesCollection.find().decode(BibleStudy.self).drain()
-            print(bibleStudies)
             return bibleStudies
         } catch {
             print("Error getting list of bible studies: \(error.localizedDescription)")
@@ -65,12 +64,13 @@ class MongoDBManager {
         let usersCollection = db!["Users"]
         
         do {
-            let user = try await usersCollection.findOne(["username": username, "passwordHash": passwordHash], as: User.self)
+            let user: User? = try await usersCollection.findOne(["username": username, "passwordHash": passwordHash], as: User.self)
             
             if user == nil {
                 print("Could not find \(username)")
                 return nil
             } else {
+                print("User \(user!.id): \(user!.fname) \(user!.lname)")
                 return user!
             }
         } catch {

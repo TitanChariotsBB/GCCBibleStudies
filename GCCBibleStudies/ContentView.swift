@@ -8,8 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @AppStorage("needsAccount") var needsAccount: Bool = true
+    
+    @EnvironmentObject var VM: ViewModel
+    
     var body: some View {
-        LoginView()
+        VStack {
+            MainView()
+        }.fullScreenCover(isPresented: $VM.isLoggedOut) {
+            //
+        } content: {
+            if needsAccount {
+                CreateNewAccount()
+            } else {
+                UserLoginView()
+            }
+        }
     }
 }
 

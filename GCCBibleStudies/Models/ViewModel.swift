@@ -18,6 +18,9 @@ func hash(data: Data) -> String {
 
 class ViewModel: ObservableObject {
     @Published var bibleStudies: [BibleStudy] = []
+    @Published var currentUser: User? = nil
+    @Published var isLoggedOut: Bool = true
+    
     let mm: MongoDBManager = MongoDBManager()
     
     init() {
@@ -26,7 +29,9 @@ class ViewModel: ObservableObject {
     
     func getBibleStudies() {
         Task {
-            await mm.connect()
+            if !mm.isConnected {
+                await mm.connect()
+            }
             let studies = await mm.getBibleStudies()
             
             await MainActor.run {
@@ -55,5 +60,27 @@ class ViewModel: ObservableObject {
                 await mm.createUser(user: newUser)
             }
         }
+    }
+    
+    func loginUser(username: String, password: String) {
+        let inputData = password.data(using: .utf8)!
+        let hashedPassword = hash(data: inputData)
+        
+        Task {
+            if !mm.isConnected {
+                await mm.connect()
+            }
+            let user = await mm.getUser(username: username, passwordHash: hashedPassword)
+            
+            if user != nil {
+                await MainActor.run {
+                    self.currentUser = user
+                    self.isLoggedOut = false
+                }
+            } else {
+                print("Error: unable to log in")
+            }
+        }
+        
     }
 }
