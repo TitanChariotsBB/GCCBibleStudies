@@ -16,10 +16,10 @@ struct BibleStudyView: View {
     var bookOfTheBible: String
     var location: String
     var day: String
-    var time: Date
+    var time: String
     
     var meetingTime: String {
-        "\(time.formatted(date: .omitted, time: .shortened)) on \(day)s"
+        "\(time) on \(day)s"
     }
     var category: String
     
@@ -64,5 +64,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", location: "Hopeman 325", day: "Tuesday", time: Date(), category: "Men's").environmentObject(ViewModel())
+    BibleStudyView(name: "Romans Bible Study", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", location: "Hopeman 325", day: "Tuesday", time: "6:00 PM", category: "Men's").environmentObject(ViewModel())
 }

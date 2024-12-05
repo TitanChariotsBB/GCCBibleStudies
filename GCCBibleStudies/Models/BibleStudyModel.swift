@@ -8,12 +8,12 @@
 import Foundation
 
 struct BibleStudy: Identifiable, Decodable {
-    var id: UUID = UUID()
+    var id: Int
     var title: String
     var location: String
     var description: String
     var bookOfTheBible: String
     var category: String
-    var time: Date
+    var time: String
     var day: String
 }

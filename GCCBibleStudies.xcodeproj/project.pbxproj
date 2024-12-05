@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2C37C0D32D010BEF00E94288 /* Meow in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D22D010BEF00E94288 /* Meow */; };
+		2C37C0D52D010BEF00E94288 /* MongoClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D42D010BEF00E94288 /* MongoClient */; };
+		2C37C0D72D010BEF00E94288 /* MongoCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D62D010BEF00E94288 /* MongoCore */; };
+		2C37C0D92D010BEF00E94288 /* MongoKitten in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D82D010BEF00E94288 /* MongoKitten */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2CD4BB5B2CEC19ED003E372F /* GCCBibleStudies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCCBibleStudies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +30,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C37C0D72D010BEF00E94288 /* MongoCore in Frameworks */,
+				2C37C0D52D010BEF00E94288 /* MongoClient in Frameworks */,
+				2C37C0D92D010BEF00E94288 /* MongoKitten in Frameworks */,
+				2C37C0D32D010BEF00E94288 /* Meow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +76,10 @@
 			);
 			name = GCCBibleStudies;
 			packageProductDependencies = (
+				2C37C0D22D010BEF00E94288 /* Meow */,
+				2C37C0D42D010BEF00E94288 /* MongoClient */,
+				2C37C0D62D010BEF00E94288 /* MongoCore */,
+				2C37C0D82D010BEF00E94288 /* MongoKitten */,
 			);
 			productName = GCCBibleStudies;
 			productReference = 2CD4BB5B2CEC19ED003E372F /* GCCBibleStudies.app */;
@@ -94,6 +109,9 @@
 			);
 			mainGroup = 2CD4BB522CEC19ED003E372F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2CD4BB5C2CEC19ED003E372F /* Products */;
 			projectDirPath = "";
@@ -322,6 +340,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orlandos-nl/MongoKitten.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.9.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2C37C0D22D010BEF00E94288 /* Meow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */;
+			productName = Meow;
+		};
+		2C37C0D42D010BEF00E94288 /* MongoClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */;
+			productName = MongoClient;
+		};
+		2C37C0D62D010BEF00E94288 /* MongoCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */;
+			productName = MongoCore;
+		};
+		2C37C0D82D010BEF00E94288 /* MongoKitten */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C37C0D12D010BEF00E94288 /* XCRemoteSwiftPackageReference "MongoKitten" */;
+			productName = MongoKitten;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2CD4BB532CEC19ED003E372F /* Project object */;
 }

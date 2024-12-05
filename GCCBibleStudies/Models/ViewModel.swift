@@ -9,16 +9,28 @@ import Foundation
 
 class ViewModel: ObservableObject {
     @Published var bibleStudies: [BibleStudy] = []
+    let mm: MongoDBManager = MongoDBManager()
     
     init() {
-        createDummyData()
+        getBibleStudies()
     }
     
-    func createDummyData() {
-        bibleStudies.append(BibleStudy(title: "Prayer Group", location: "Stem 376", description: "Test Description", bookOfTheBible: "", category: "Men's", time: Date(), day: "Monday"))
-        
-        bibleStudies.append(BibleStudy(title: "Romans Bible Study", location: "HAL 216", description: "Test Description 2", bookOfTheBible: "Romans", category: "All", time: Date(), day: "Tuesday"))
-        
-        bibleStudies.append(BibleStudy(title: "Joel", location: "Hopeman 226", description: "Test Description 2", bookOfTheBible: "Joel", category: "Men's", time: Date(), day: "Tuesday"))
+    func getBibleStudies() {
+        Task {
+            await mm.connect()
+            let studies = await mm.getBibleStudies()
+            
+            await MainActor.run {
+                self.bibleStudies = studies
+            }
+        }
+    }
+    
+    func createNewBibleStudy(bibleStudy: BibleStudy) {
+        if mm.isConnected {
+            Task {
+                await mm.createNewBibleStudy(bs: bibleStudy)
+            }
+        }
     }
 }
