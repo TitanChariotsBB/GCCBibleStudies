@@ -11,21 +11,22 @@ struct BibleStudyListView: View {
     @EnvironmentObject var VM: ViewModel
     
     @State var searchText: String = ""
-    @State var myStudies: Bool = false
+    
     var body: some View {
-        NavigationStack {
+        VStack(alignment: .leading) {
             if VM.currentUser != nil {
-                Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold()
+                Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding()
+            } else {
+                Text("Welcome, Guest").font(.largeTitle).bold().padding()
             }
-            Toggle(isOn: $myStudies) {
-                Text("Show only studies I've joied")
-            }.padding()
-            ScrollView {
-                ForEach(VM.bibleStudies) { bibleStudy in
-                    BibleStudyView(bs: bibleStudy)
+            NavigationStack {
+                ScrollView {
+                    ForEach(VM.bibleStudies) { bibleStudy in
+                        BibleStudyView(bs: bibleStudy)
+                    }
                 }
-            }
-        }.searchable(text: $searchText)
+            }.searchable(text: $searchText)
+        }
     }
 }
 
