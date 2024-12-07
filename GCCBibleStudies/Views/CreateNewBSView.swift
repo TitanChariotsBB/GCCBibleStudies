@@ -37,18 +37,22 @@ struct CreateNewBSView: View {
             Text("Enter details below:")
             TextField(text: $name) {
                 Text("Bible study name")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .frame(width:350)
             TextField(text: $description) {
                 Text("Description")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .frame(width:350)
             TextField(text: $bookOfTheBible) {
                 Text("Book of the Bible")
-            }
+            }.textFieldStyle(.roundedBorder)
+                .frame(width:350)
             TextField(text: $location) {
                 Text("Location on campus")
-            }
-            HStack {
-                Text("Meeting day: ")
+            }.textFieldStyle(.roundedBorder)
+                .frame(width:350)
+            HStack(spacing: 0) {
+                Text("Meeting Day: ")
                 Picker("Day", selection: $day) {
                     Text("Monday").tag(Days.monday)
                     Text("Tuesday").tag(Days.tuesday)
@@ -58,7 +62,7 @@ struct CreateNewBSView: View {
                     Text("Saturday").tag(Days.saturday)
                     Text("Sunday").tag(Days.sunday)
                 }
-                DatePicker("time: ", selection: $date, displayedComponents: [.hourAndMinute])
+                DatePicker("Time: ", selection: $date, displayedComponents: [.hourAndMinute])
                 Spacer()
             }
             
