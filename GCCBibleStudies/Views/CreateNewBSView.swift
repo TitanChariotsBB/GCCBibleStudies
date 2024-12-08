@@ -88,7 +88,8 @@ struct CreateNewBSView: View {
                         bookOfTheBible: bookOfTheBible,
                         category: category.rawValue,
                         time: date.formatted(date: .omitted, time: .shortened),
-                        day: day.rawValue
+                        day: day.rawValue,
+                        organizer: (VM.currentUser?.fname ?? "Anonymous") + " " + (VM.currentUser?.lname ?? "User")
                     ))
                     
                     if createAlert {

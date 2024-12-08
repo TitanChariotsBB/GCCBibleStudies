@@ -14,7 +14,7 @@ struct BibleStudyView: View {
     var bs: BibleStudy
     
     var meetingTime: String {
-        "\(bs.time.capitalized) on \(bs.day)s"
+        "\(bs.time) on \(bs.day.capitalized)s"
     }
     
     var body: some View {
@@ -25,6 +25,7 @@ struct BibleStudyView: View {
             Text(bs.location).font(.title2)
             Text(meetingTime).font(.title2)
             Text(bs.category).font(.title2)
+            Text("Organizer: \(bs.organizer)").font(.title2)
             HStack {
                 Button {
                     joined.toggle()
@@ -58,5 +59,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday")).environmentObject(ViewModel())
+    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott")).environmentObject(ViewModel())
 }
