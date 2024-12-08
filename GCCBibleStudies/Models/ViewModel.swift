@@ -47,6 +47,12 @@ class ViewModel: ObservableObject {
         if mm.isConnected {
             Task {
                 await mm.createNewBibleStudy(bs: bibleStudy)
+                
+                let studies = await mm.getBibleStudies()
+                
+                await MainActor.run {
+                    self.bibleStudies = studies
+                }
             }
         }
     }
@@ -88,6 +94,8 @@ class ViewModel: ObservableObject {
     }
     
     func createNotification(id: Int, title: String, day: String, time: String) {
+        print("Attempting to create notification")
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = "\(day) at \(time)"

@@ -14,7 +14,7 @@ struct BibleStudyView: View {
     var bs: BibleStudy
     
     var meetingTime: String {
-        "\(bs.time) on \(bs.day)s"
+        "\(bs.time.capitalized) on \(bs.day)s"
     }
     
     var body: some View {
