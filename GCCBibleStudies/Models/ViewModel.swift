@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import UserNotifications
 
 func hash(data: Data) -> String {
     let digest = SHA256.hash(data: data)
@@ -20,6 +21,8 @@ class ViewModel: ObservableObject {
     @Published var bibleStudies: [BibleStudy] = []
     @Published var currentUser: User? = nil
     @Published var isLoggedOut: Bool = true
+    
+    var activeNotifications: [Int: String] = [:]
     
     let mm: MongoDBManager = MongoDBManager()
     
@@ -82,5 +85,67 @@ class ViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func createNotification(id: Int, title: String, day: String, time: String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = "\(day) at \(time)"
+        
+        var dayInt: Int = 1
+        
+        if day == "Sunday" {
+            dayInt = 1
+        } else if day == "Monday" {
+            dayInt = 2
+        } else if day == "Tuesday" {
+            dayInt = 3
+        } else if day == "Wednesday" {
+            dayInt = 4
+        } else if day == "Thursday" {
+            dayInt = 5
+        } else if day == "Friday" {
+            dayInt = 6
+        } else {
+            dayInt = 7
+        }
+        
+        let timeList = time.components(separatedBy: ":")
+        let hour: Int = Int(timeList[0]) ?? 12
+        let minute: Int = Int(timeList[1]
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "M", with: "")
+            .replacingOccurrences(of: "A", with: "")
+            .replacingOccurrences(of: "P", with: "")) ?? 0
+        
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.weekday = dayInt
+        dateComponents.hour = hour - 1 // set alert 1 hour before
+        dateComponents.minute = minute
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        Task {
+            do {
+                try await notificationCenter.add(request)
+                
+                await MainActor.run {
+                    activeNotifications[id] = uuidString // Keep track of the UUIDs of active notifications
+                }
+            } catch {
+                print("Error: \(error)")
+            }
+        }
+    }
+    
+    func deleteNotification(id: Int) {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [activeNotifications[id] ?? ""])
     }
 }

@@ -29,6 +29,8 @@ struct CreateNewBSView: View {
     
     @State var category: Categories = .all
     
+    @State var createAlert: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Create New Bible Study").font(.largeTitle).bold().padding(.bottom, 40)
@@ -69,11 +71,17 @@ struct CreateNewBSView: View {
                 }
             }
             
+            Toggle(isOn: $createAlert) {
+                Text("Set reminder")
+            }
+            
             HStack {
                 Spacer()
                 Button {
+                    let bibleStudyID = Int.random(in: 0..<1000000)
+                    
                     VM.createNewBibleStudy(bibleStudy: BibleStudy(
-                        id: Int.random(in: 0..<1000000),
+                        id: bibleStudyID,
                         title: name,
                         location: location,
                         description: description,
@@ -82,6 +90,11 @@ struct CreateNewBSView: View {
                         time: date.formatted(date: .omitted, time: .shortened),
                         day: day.rawValue
                     ))
+                    
+                    if createAlert {
+                        VM.createNotification(id: bibleStudyID, title: name, day: day.rawValue, time: date.formatted(date: .omitted, time: .shortened))
+                    }
+                    
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
