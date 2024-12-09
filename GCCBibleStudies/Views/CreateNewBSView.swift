@@ -96,6 +96,15 @@ struct CreateNewBSView: View {
                         VM.createNotification(id: bibleStudyID, title: name, day: day.rawValue, time: date.formatted(date: .omitted, time: .shortened))
                     }
                     
+                    //reset fields
+                    name = ""
+                    location = ""
+                    description = ""
+                    bookOfTheBible = ""
+                    date = Date()
+                    day = .monday
+                    category = .all
+                    
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
