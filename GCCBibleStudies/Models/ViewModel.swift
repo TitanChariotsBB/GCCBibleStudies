@@ -82,6 +82,7 @@ class ViewModel: ObservableObject {
             let user = await mm.getUser(username: username, passwordHash: hashedPassword)
             
             if user != nil {
+                print("Succesfully logged in!")
                 await MainActor.run {
                     self.currentUser = user
                     self.isLoggedOut = false

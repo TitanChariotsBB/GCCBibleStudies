@@ -23,6 +23,9 @@ class MongoDBManager {
     }
     
     func getBibleStudies() async -> [BibleStudy] {
+        
+        print("Attempting to fetch bible studies")
+        
         if db == nil {
             print("Error: database is nil")
             return []
@@ -46,7 +49,7 @@ class MongoDBManager {
         
         let bibleStudiesCollection = db!["BibleStudies"]
         
-        let newBibleStudy: Document = ["id": bs.id, "title": bs.title, "location": bs.location, "description": bs.description, "bookOfTheBible": bs.bookOfTheBible, "category": bs.category, "time": bs.time, "day": bs.day]
+        let newBibleStudy: Document = ["id": bs.id, "title": bs.title, "location": bs.location, "description": bs.description, "bookOfTheBible": bs.bookOfTheBible, "category": bs.category, "time": bs.time, "day": bs.day, "organizer": bs.organizer]
         
         do {
             try await bibleStudiesCollection.insert(newBibleStudy)
