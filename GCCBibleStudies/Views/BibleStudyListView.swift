@@ -10,18 +10,28 @@ import SwiftUI
 struct BibleStudyListView: View {
     @EnvironmentObject var VM: ViewModel
     
-    @StateObject var SVM: SearchViewModel
-    
     var body: some View {
-        ScrollView {
-            VStack(spacing:20) {
-                ForEach(VM.bibleStudies) { bibleStudy in
-                    BibleStudyView(bs: bibleStudy)
+        // I don't think I should have to wrap this in a NavigationStack,
+        // but for some reason the search bar and navigation title don't
+        // show without it
+        NavigationStack {
+            ScrollView {
+                VStack(spacing:320) {
+                    ForEach((VM.searchtext.isEmpty ? VM.allBibleStudies : VM.filteredBibleStudies).sorted(by: {$0.title < $1.title})) { bibleStudy in
+                        BibleStudyView(bs: bibleStudy)
+                    }
                 }
             }
+            .searchable(text: $VM.searchtext,placement: .automatic,prompt: Text("Search Bible Studies..."))
+            .searchScopes($VM.searchscope, scopes: {
+                ForEach(VM.allsearchscopes, id:\.self) {
+                    scope in
+                    Text(scope.title)
+                        .tag(scope)
+                }
+            })
+            .navigationTitle(VM.currentUser != nil ? "Welcome \(VM.currentUser!.fname)" : "Welcome Guest")
         }
-        .searchable(text: $SVM.searchtext,placement: .automatic,prompt: Text("Search Bible Studies..."))
-        .navigationTitle(VM.currentUser != nil ? "Welcome \(VM.currentUser!.fname)" : "Welcome Guest")
         .onAppear() {
             VM.getBibleStudies()
         }
@@ -31,6 +41,6 @@ struct BibleStudyListView: View {
 
 #Preview {
     var VM = ViewModel()
-    BibleStudyListView(SVM:SearchViewModel(viewmodel:VM))
+    BibleStudyListView()
         .environmentObject(VM)
 }

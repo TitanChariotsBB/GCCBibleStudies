@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import Combine
 import UserNotifications
 
 func hash(data: Data) -> String {
@@ -18,7 +19,7 @@ func hash(data: Data) -> String {
 }
 
 class ViewModel: ObservableObject {
-    @Published var bibleStudies: [BibleStudy] = []
+    @Published var allBibleStudies: [BibleStudy] = []
     @Published var currentUser: User? = nil
     @Published var isLoggedOut: Bool = true
     
@@ -28,6 +29,7 @@ class ViewModel: ObservableObject {
     
     init() {
         getBibleStudies()
+        addsubscribers()
     }
     
     func getBibleStudies() {
@@ -36,16 +38,21 @@ class ViewModel: ObservableObject {
                 await mm.connect()
             }
             let studies = await mm.getBibleStudies()
+            print("Fetched \(studies.count) Bible studies")
             
             await MainActor.run {
-                self.bibleStudies = studies
+                self.allBibleStudies = studies
+
+                // want to only display categories that are present to the user in the filter menu
+                let currentcategories = Set(allBibleStudies.map({ $0.category }))
+                allsearchscopes = [.any] + Set(currentcategories.map({ SearchScopeOption.strtoop(str:$0) }))
             }
         }
     }
     
     func getBibleStudiesJoined() -> [BibleStudy] {
         if currentUser != nil {
-            return bibleStudies.filter() { $0.participants.contains(currentUser!.id) }
+            return allBibleStudies.filter() { $0.participants.contains(currentUser!.id) }
         } else {
             return []
         }
@@ -53,7 +60,7 @@ class ViewModel: ObservableObject {
     
     func getBibleStudiesCreated() -> [BibleStudy] {
         if currentUser != nil {
-            return bibleStudies.filter() { $0.organizerId == currentUser!.id }
+            return allBibleStudies.filter() { $0.organizerId == currentUser!.id }
         } else {
             return []
         }
@@ -67,7 +74,7 @@ class ViewModel: ObservableObject {
                 let studies = await mm.getBibleStudies()
                 
                 await MainActor.run {
-                    self.bibleStudies = studies
+                    self.allBibleStudies = studies
                 }
             }
         }
@@ -189,5 +196,82 @@ class ViewModel: ObservableObject {
     func deleteNotification(id: Int) {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [activeNotifications[id] ?? ""])
+    }
+    
+    
+    
+    // ===========================================================
+    // Search Functionality
+    // ===========================================================
+    @Published var searchtext:String = ""
+    @Published var filteredBibleStudies:[BibleStudy] = []
+    var cancellables = Set<AnyCancellable>()
+    
+    // add subscribers to the search text
+    func addsubscribers() {
+        // access the published value of the search text so that everytime the text changes
+        // this text changes as well
+        // debounce makes it so that we just perform an action if the user has stopped typing
+        // for at least 0.3 seconds
+        $searchtext
+            .combineLatest($searchscope)
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .sink { (searchtext,searchscope) in
+                self.filterBibleStudies(searchtext: searchtext, currentsearchscope: searchscope)
+            }
+            .store(in: &cancellables)
+        
+    }
+    
+    private func filterBibleStudies(searchtext:String,currentsearchscope:SearchScopeOption) {
+        // give guard the condition we want to be true
+        // guard else block runs if not boolean expression given
+        guard !searchtext.isEmpty else {
+            filteredBibleStudies = []
+            searchscope = .any
+            return
+        }
+        
+        filteredBibleStudies = allBibleStudies.filter({ bibstud in
+            return (currentsearchscope == .any || SearchScopeOption.strtoop(str:bibstud.category) == currentsearchscope) && (attrhas(attr: bibstud.title, has: searchtext) || attrhas(attr: bibstud.category, has: searchtext) || attrhas(attr: bibstud.day, has: searchtext) || attrhas(attr: bibstud.description, has: searchtext) || attrhas(attr: bibstud.location, has: searchtext) || attrhas(attr: bibstud.organizer, has: searchtext) || attrhas(attr: bibstud.time, has: searchtext))
+        })
+    }
+    
+    func attrhas(attr:String,has:String) -> Bool {
+        print(attr.uppercased().contains(has.uppercased()))
+        return attr.uppercased().contains(has.uppercased())
+    }
+    
+    @Published var searchscope:SearchScopeOption = .any
+    @Published var allsearchscopes:[SearchScopeOption] = []
+    
+    enum SearchScopeOption : Hashable{
+        case any,everyone,men,women
+        
+        var title:String {
+            switch(self) {
+            case .any:
+                return "Any"
+            case .everyone:
+                return "Everyone"
+            case .men:
+                return "Men"
+            case .women:
+                return "Women"
+            }
+        }
+        
+        static func strtoop(str:String) -> SearchScopeOption {
+            switch(str.uppercased()) {
+            case "ANY":
+                return .any
+            case "MEN", "MEN'S", "MENS":
+                return .men
+            case "WOMEN","WOMEN'S","WOMENS":
+                return .women
+            default:
+                return .everyone
+            }
+        }
     }
 }
