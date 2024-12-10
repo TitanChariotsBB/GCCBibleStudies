@@ -136,29 +136,37 @@ class ViewModel: ObservableObject {
         
         var dayInt: Int = 1
         
-        if day == "Sunday" {
+        if day == "sunday" {
             dayInt = 1
-        } else if day == "Monday" {
+        } else if day == "monday" {
             dayInt = 2
-        } else if day == "Tuesday" {
+        } else if day == "tuesday" {
             dayInt = 3
-        } else if day == "Wednesday" {
+        } else if day == "wednesday" {
             dayInt = 4
-        } else if day == "Thursday" {
+        } else if day == "thursday" {
             dayInt = 5
-        } else if day == "Friday" {
+        } else if day == "friday" {
             dayInt = 6
         } else {
             dayInt = 7
         }
         
+        print("Day: \(dayInt)")
+        
         let timeList = time.components(separatedBy: ":")
         let hour: Int = Int(timeList[0]) ?? 12
-        let minute: Int = Int(timeList[1]
-            .replacingOccurrences(of: " ", with: "")
-            .replacingOccurrences(of: "M", with: "")
+        
+        let minuteString = timeList[1].replacingOccurrences(of: "M", with: "")
             .replacingOccurrences(of: "A", with: "")
-            .replacingOccurrences(of: "P", with: "")) ?? 0
+            .replacingOccurrences(of: "P", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        print("Timelist[1]: <\(minuteString)>")
+        
+        let minute: Int = Int(minuteString) ?? 0
+        
+        print("Time: \(hour):\(minute)")
         
         var dateComponents = DateComponents()
         dateComponents.calendar = Calendar.current
@@ -166,7 +174,8 @@ class ViewModel: ObservableObject {
         dateComponents.hour = hour - 1 // set alert 1 hour before
         dateComponents.minute = minute
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
