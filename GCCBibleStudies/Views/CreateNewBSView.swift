@@ -89,7 +89,9 @@ struct CreateNewBSView: View {
                         category: category.rawValue,
                         time: date.formatted(date: .omitted, time: .shortened),
                         day: day.rawValue,
-                        organizer: (VM.currentUser?.fname ?? "Anonymous") + " " + (VM.currentUser?.lname ?? "User")
+                        organizer: (VM.currentUser?.fname ?? "Anonymous") + " " + (VM.currentUser?.lname ?? "User"),
+                        organizerId: VM.currentUser?.id ?? 0,
+                        participants: []
                     ))
                     
                     if createAlert {

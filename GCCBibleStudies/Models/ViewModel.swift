@@ -57,6 +57,14 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func joinBibleStudy(bibleStudyId: Int, userId: Int) {
+        if mm.isConnected {
+            Task {
+                await mm.joinBibleStudy(bibleStudyId: bibleStudyId, userId: userId)
+            }
+        }
+    }
+    
     func createNewUser(username: String, password: String, fname: String, lname: String) {
         // Hash password
         let inputData = password.data(using: .utf8)!

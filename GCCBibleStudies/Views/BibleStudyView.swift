@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BibleStudyView: View {
-    
+    @EnvironmentObject var VM: ViewModel
     @State var joined: Bool = false
     
     var bs: BibleStudy
@@ -26,9 +26,13 @@ struct BibleStudyView: View {
             Text(meetingTime).font(.title2)
             Text(bs.category).font(.title2)
             Text("Organizer: \(bs.organizer)").font(.title2)
+            Text("Number of participants: \(bs.participants.count + 1)")
             HStack {
                 Button {
-                    joined.toggle()
+                    if VM.currentUser != nil {
+                        VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                        joined.toggle()
+                    }
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
@@ -59,5 +63,5 @@ struct BibleStudyView: View {
 }
 
 #Preview {
-    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott")).environmentObject(ViewModel())
+    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott", organizerId: 0, participants: [0])).environmentObject(ViewModel())
 }

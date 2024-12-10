@@ -26,6 +26,8 @@ struct BibleStudyListView: View {
                     }
                 }
             }.searchable(text: $searchText)
+        }.onAppear() {
+            VM.getBibleStudies()
         }
     }
 }
