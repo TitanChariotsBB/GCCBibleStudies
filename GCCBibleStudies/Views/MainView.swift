@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var VM:ViewModel
     var body: some View {
         TabView {
             
-            BibleStudyListView().tabItem {
+            BibleStudyListView(SVM:SearchViewModel(viewmodel: VM)).tabItem {
                 Image(systemName: "list.bullet")
                 Text("Bible Studies")
             }
@@ -25,5 +26,6 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView().environmentObject(ViewModel())
+    var VM = ViewModel()
+    MainView().environmentObject(VM)
 }
