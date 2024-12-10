@@ -15,7 +15,7 @@ UI (Choose at least 6 distinct options) (5 pts each)
 - [ ] Map View
 - [ ] Web View -- Maybe we can link to biblegateway or something
 - [ ] Gallery View
-- [ ] Sheet View -- We should probably make create Bible Study a sheet view
+- [x] Sheet View
 - [x] Onboarding View 
 - [ ] Picker View 
 
