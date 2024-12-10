@@ -15,9 +15,13 @@ struct UserLoginView: View {
     
     @State var errorText: String = ""
     
+    @State var loginAttempted: Bool = false
+    
     var body: some View {
         VStack {
-            Text("Login")
+            if loginAttempted && VM.isLoggedOut {
+                Text("Username or password incorrect")
+            }
             TextField(text: $username) {
                 Text("Username")
             }.textFieldStyle(.roundedBorder)
@@ -33,6 +37,7 @@ struct UserLoginView: View {
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
             Button {
+                loginAttempted = true
                 VM.loginUser(username: username, password: password)
             } label: {
                 Text("Login")
