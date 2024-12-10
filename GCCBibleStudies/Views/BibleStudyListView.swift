@@ -14,11 +14,6 @@ struct BibleStudyListView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if VM.currentUser != nil {
-                Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding()
-            } else {
-                Text("Welcome, Guest").font(.largeTitle).bold().padding()
-            }
             NavigationStack {
                 ScrollView {
                     ForEach(VM.bibleStudies) { bibleStudy in

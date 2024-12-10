@@ -43,6 +43,22 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func getBibleStudiesJoined() -> [BibleStudy] {
+        if currentUser != nil {
+            return bibleStudies.filter() { $0.participants.contains(currentUser!.id) }
+        } else {
+            return []
+        }
+    }
+    
+    func getBibleStudiesCreated() -> [BibleStudy] {
+        if currentUser != nil {
+            return bibleStudies.filter() { $0.organizerId == currentUser!.id }
+        } else {
+            return []
+        }
+    }
+    
     func createNewBibleStudy(bibleStudy: BibleStudy) {
         if mm.isConnected {
             Task {

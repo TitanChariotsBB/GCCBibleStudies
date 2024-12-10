@@ -13,6 +13,8 @@ struct UserLoginView: View {
     @State var username: String = ""
     @State var password: String = ""
     
+    @State var errorText: String = ""
+    
     var body: some View {
         VStack {
             Text("Login")

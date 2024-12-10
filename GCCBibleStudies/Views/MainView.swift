@@ -11,18 +11,20 @@ struct MainView: View {
     
     @Binding var isLoggedIn: Bool
     
+    @State var tabSelection = 1
+    
     var body: some View {
-        TabView {
+        TabView(selection: $tabSelection) {
             if isLoggedIn {
                 BibleStudyListView().tabItem {
-                    Image(systemName: "list.bullet")
+                    Image(systemName: "magnifyingglass")
                     Text("Bible Studies")
-                }
+                }.tag(1)
                 
-                CreateNewBSView().tabItem {
-                    Image(systemName: "plus")
-                    Text("New Bible Study")
-                }
+                ProfileView(tabSelection: $tabSelection).tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                }.tag(2)
             } else {
                 Text("Fetching bible studies...")
             }

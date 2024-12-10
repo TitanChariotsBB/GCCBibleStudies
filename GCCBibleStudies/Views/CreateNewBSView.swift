@@ -10,6 +10,8 @@ import SwiftUI
 struct CreateNewBSView: View {
     @EnvironmentObject var VM: ViewModel
     
+    @Binding var showCreateNewBS: Bool
+    
     enum Days: String, CaseIterable {
         case monday, tuesday, wednesday, thursday, friday, saturday, sunday
     }
@@ -107,6 +109,8 @@ struct CreateNewBSView: View {
                     day = .monday
                     category = .all
                     
+                    showCreateNewBS = false
+                    
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
@@ -116,12 +120,12 @@ struct CreateNewBSView: View {
                 }
                 
                 Button {
-                    // onClick
+                    showCreateNewBS = false
                 } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 20).fill(Color.white)
-                            .frame(width: 120, height: 40)
-                        Text("Save Draft").foregroundStyle(.blue).bold()
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.blue).frame(width: 80, height: 40)
+                        Text("Cancel").foregroundStyle(.white).bold()
                     }
                 }
             }
@@ -132,5 +136,6 @@ struct CreateNewBSView: View {
 }
 
 #Preview {
-    CreateNewBSView().environmentObject(ViewModel())
+    @State var showCreateNewBS: Bool = true
+    CreateNewBSView(showCreateNewBS: $showCreateNewBS).environmentObject(ViewModel())
 }
