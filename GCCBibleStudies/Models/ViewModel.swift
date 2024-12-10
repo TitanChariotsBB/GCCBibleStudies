@@ -65,6 +65,14 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func leaveBibleStudy(bibleStudyId: Int, userId: Int) {
+        if mm.isConnected {
+            Task {
+                await mm.leaveBibleStudy(bibleStudyId: bibleStudyId, userId: userId)
+            }
+        }
+    }
+    
     func createNewUser(username: String, password: String, fname: String, lname: String) {
         // Hash password
         let inputData = password.data(using: .utf8)!
@@ -87,6 +95,7 @@ class ViewModel: ObservableObject {
             if !mm.isConnected {
                 await mm.connect()
             }
+            
             let user = await mm.getUser(username: username, passwordHash: hashedPassword)
             
             if user != nil {

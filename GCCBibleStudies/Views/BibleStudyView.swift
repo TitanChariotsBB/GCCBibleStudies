@@ -9,8 +9,8 @@ import SwiftUI
 
 struct BibleStudyView: View {
     @EnvironmentObject var VM: ViewModel
+    @State var joinButtonDisabled: Bool = true
     @State var joined: Bool = false
-    
     var bs: BibleStudy
     
     var meetingTime: String {
@@ -26,11 +26,15 @@ struct BibleStudyView: View {
             Text(meetingTime).font(.title2)
             Text(bs.category).font(.title2)
             Text("Organizer: \(bs.organizer)").font(.title2)
-            Text("Number of participants: \(bs.participants.count + 1)")
+            Text("Number of participants: \(bs.participants.count)")
             HStack {
                 Button {
                     if VM.currentUser != nil {
-                        VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                        if joined {
+                            VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                        } else {
+                            VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                        }
                         joined.toggle()
                     }
                 } label: {
@@ -38,12 +42,12 @@ struct BibleStudyView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.blue).frame(width: 80, height: 30)
                         if joined {
-                            Text("Joined").bold().foregroundStyle(.white)
+                            Text("Leave").bold().foregroundStyle(.white)
                         } else {
                             Text("Join").bold().foregroundStyle(.white)
                         }
                     }
-                }
+                }.disabled(joinButtonDisabled)
                 
                 Button {
                     // onClick
@@ -58,7 +62,17 @@ struct BibleStudyView: View {
                 Spacer()
             }
             Spacer()
-        }.padding()
+        }
+        .padding()
+        .onAppear() {
+            if VM.currentUser != nil {
+                joined = bs.participants.contains(VM.currentUser!.id)
+                print("You are a participant in \(bs.title)")
+                joinButtonDisabled = false
+            } else {
+                print("Current user is nil. Unable to fetch joined status")
+            }
+        }
     }
 }
 

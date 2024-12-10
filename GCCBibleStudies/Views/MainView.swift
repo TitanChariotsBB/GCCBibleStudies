@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @Binding var isLoggedIn: Bool
+    
     var body: some View {
         TabView {
-            
-            BibleStudyListView().tabItem {
-                Image(systemName: "list.bullet")
-                Text("Bible Studies")
-            }
-            
-            CreateNewBSView().tabItem {
-                Image(systemName: "plus")
-                Text("New Bible Study")
+            if isLoggedIn {
+                BibleStudyListView().tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("Bible Studies")
+                }
+                
+                CreateNewBSView().tabItem {
+                    Image(systemName: "plus")
+                    Text("New Bible Study")
+                }
+            } else {
+                Text("Fetching bible studies...")
             }
         }
     }
 }
 
 #Preview {
-    MainView().environmentObject(ViewModel())
+    @State var isLoggedIn: Bool = true
+    MainView(isLoggedIn: $isLoggedIn).environmentObject(ViewModel())
 }

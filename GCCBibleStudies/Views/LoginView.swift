@@ -75,10 +75,10 @@ struct LoginView: View {
                     
                     NavigationLink {
                         //right now there are 2 valid logins
-                        if (username == "christianabbott" && password == "password1") || (username == "natekuhns" && password == "password9"){MainView().navigationBarBackButtonHidden(true)}
-                        else {
-                            LoginView(displayerrormessage: true).navigationBarBackButtonHidden(true)
-                        }
+//                        if (username == "christianabbott" && password == "password1") || (username == "natekuhns" && password == "password9"){MainView().navigationBarBackButtonHidden(true)}
+//                        else {
+//                            LoginView(displayerrormessage: true).navigationBarBackButtonHidden(true)
+//                        }
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
