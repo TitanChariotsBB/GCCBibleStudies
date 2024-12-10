@@ -43,6 +43,22 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func getBibleStudiesJoined() -> [BibleStudy] {
+        if currentUser != nil {
+            return bibleStudies.filter() { $0.participants.contains(currentUser!.id) }
+        } else {
+            return []
+        }
+    }
+    
+    func getBibleStudiesCreated() -> [BibleStudy] {
+        if currentUser != nil {
+            return bibleStudies.filter() { $0.organizerId == currentUser!.id }
+        } else {
+            return []
+        }
+    }
+    
     func createNewBibleStudy(bibleStudy: BibleStudy) {
         if mm.isConnected {
             Task {
@@ -53,6 +69,22 @@ class ViewModel: ObservableObject {
                 await MainActor.run {
                     self.bibleStudies = studies
                 }
+            }
+        }
+    }
+    
+    func joinBibleStudy(bibleStudyId: Int, userId: Int) {
+        if mm.isConnected {
+            Task {
+                await mm.joinBibleStudy(bibleStudyId: bibleStudyId, userId: userId)
+            }
+        }
+    }
+    
+    func leaveBibleStudy(bibleStudyId: Int, userId: Int) {
+        if mm.isConnected {
+            Task {
+                await mm.leaveBibleStudy(bibleStudyId: bibleStudyId, userId: userId)
             }
         }
     }
@@ -79,6 +111,7 @@ class ViewModel: ObservableObject {
             if !mm.isConnected {
                 await mm.connect()
             }
+            
             let user = await mm.getUser(username: username, passwordHash: hashedPassword)
             
             if user != nil {

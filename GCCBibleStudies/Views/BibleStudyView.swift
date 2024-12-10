@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct BibleStudyView: View {
-    
+    @EnvironmentObject var VM: ViewModel
+    @State var joinButtonDisabled: Bool = true
     @State var joined: Bool = false
-    
     var bs: BibleStudy
     
     var meetingTime: String {
@@ -35,15 +35,23 @@ struct BibleStudyView: View {
                     Text(meetingTime).font(.title2)
                     Text(bs.category).font(.title2)
                     Text("Organizer: \(bs.organizer)").font(.title2)
+                    Text("Number of participants: \(bs.participants.count)")
                     HStack {
                         Button {
-                            joined.toggle()
+                           if VM.currentUser != nil {
+                              if joined {
+                                  VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                              } else {
+                                  VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                              }
+                              joined.toggle()
+                           }
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .fill(Color.blue).frame(width: 80, height: 30)
                                 if joined {
-                                    Text("Joined").bold().foregroundStyle(.white)
+                                    Text("Leave").bold().foregroundStyle(.white)
                                 } else {
                                     Text("Join").bold().foregroundStyle(.white)
                                 }
@@ -64,9 +72,19 @@ struct BibleStudyView: View {
                 }.padding(.leading).padding(.bottom,10).padding(.top,5)
             }.padding(8)
         }
+        .padding()
+        .onAppear() {
+            if VM.currentUser != nil {
+                joined = bs.participants.contains(VM.currentUser!.id)
+                print("You are a participant in \(bs.title)")
+                joinButtonDisabled = false
+            } else {
+                print("Current user is nil. Unable to fetch joined status")
+            }
+        }
     }
 }
 
 #Preview {
-    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the ministry of the apostle Paul with a concentration on the letter he wrote to the Romans", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott")).environmentObject(ViewModel())
+    BibleStudyView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott", organizerId: 0, participants: [0])).environmentObject(ViewModel())
 }

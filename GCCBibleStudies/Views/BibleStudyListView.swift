@@ -22,6 +22,9 @@ struct BibleStudyListView: View {
         }
         .searchable(text: $SVM.searchtext,placement: .automatic,prompt: Text("Search Bible Studies..."))
         .navigationTitle(VM.currentUser != nil ? "Welcome \(VM.currentUser!.fname)" : "Welcome Guest")
+        .onAppear() {
+            VM.getBibleStudies()
+        }
     }
 }
 

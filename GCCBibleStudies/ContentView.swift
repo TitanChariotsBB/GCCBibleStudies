@@ -13,11 +13,13 @@ struct ContentView: View {
     
     @EnvironmentObject var VM: ViewModel
     
+    @State var isLoggedIn: Bool = false
+    
     var body: some View {
         VStack {
-            MainView()
+            MainView(isLoggedIn: $isLoggedIn)
         }.fullScreenCover(isPresented: $VM.isLoggedOut) {
-            //
+            isLoggedIn = true
         } content: {
             if needsAccount {
                 CreateNewAccount()

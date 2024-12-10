@@ -45,18 +45,78 @@ class MongoDBManager {
     func createNewBibleStudy(bs: BibleStudy) async {
         if db == nil {
             print("Error: database is nil")
-        }
-        
-        let bibleStudiesCollection = db!["BibleStudies"]
-        
-        let newBibleStudy: Document = ["id": bs.id, "title": bs.title, "location": bs.location, "description": bs.description, "bookOfTheBible": bs.bookOfTheBible, "category": bs.category, "time": bs.time, "day": bs.day, "organizer": bs.organizer]
-        
-        do {
-            try await bibleStudiesCollection.insert(newBibleStudy)
-        } catch {
-            print("Error inserting bible study: \(error.localizedDescription)")
+        } else {
+            
+            let bibleStudiesCollection = db!["BibleStudies"]
+            
+            let newBibleStudy: Document = ["id": bs.id, "title": bs.title, "location": bs.location, "description": bs.description, "bookOfTheBible": bs.bookOfTheBible, "category": bs.category, "time": bs.time, "day": bs.day, "organizer": bs.organizer, "organizerId": bs.organizerId, "participants": bs.participants]
+            
+            do {
+                try await bibleStudiesCollection.insert(newBibleStudy)
+            } catch {
+                print("Error inserting bible study: \(error.localizedDescription)")
+            }
         }
     }
+    
+    func joinBibleStudy(bibleStudyId: Int, userId: Int) async {
+        if db == nil {
+            print("Error: database is nil")
+        } else {
+            
+            let bibleStudiesCollection = db!["BibleStudies"]
+            
+            do {
+                let bs: BibleStudy? = try await bibleStudiesCollection.findOne(["id": bibleStudyId], as: BibleStudy.self)
+                
+                var participants: [Int] = []
+                
+                if bs != nil {
+                    participants = bs!.participants
+                    
+                    participants.append(userId)
+                    
+                    let updatedBibleStudy: Document = ["id": bs!.id, "title": bs!.title, "location": bs!.location, "description": bs!.description, "bookOfTheBible": bs!.bookOfTheBible, "category": bs!.category, "time": bs!.time, "day": bs!.day, "organizer": bs!.organizer, "organizerId": bs!.organizerId, "participants": participants]
+                    
+                    try await bibleStudiesCollection.updateOne(where: ["id": bibleStudyId], to: updatedBibleStudy)
+                } else {
+                    print("Error: could not find bible study with id \(bibleStudyId)")
+                }
+            } catch {
+                print("Error updating bible study: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func leaveBibleStudy(bibleStudyId: Int, userId: Int) async {
+        if db == nil {
+            print("Error: database is nil")
+        } else {
+            
+            let bibleStudiesCollection = db!["BibleStudies"]
+            
+            do {
+                let bs: BibleStudy? = try await bibleStudiesCollection.findOne(["id": bibleStudyId], as: BibleStudy.self)
+                
+                var participants: [Int] = []
+                
+                if bs != nil {
+                    participants = bs!.participants
+                    
+                    participants = participants.filter() { $0 != userId }
+                    
+                    let updatedBibleStudy: Document = ["id": bs!.id, "title": bs!.title, "location": bs!.location, "description": bs!.description, "bookOfTheBible": bs!.bookOfTheBible, "category": bs!.category, "time": bs!.time, "day": bs!.day, "organizer": bs!.organizer, "organizerId": bs!.organizerId, "participants": participants]
+                    
+                    try await bibleStudiesCollection.updateOne(where: ["id": bibleStudyId], to: updatedBibleStudy)
+                } else {
+                    print("Error: could not find bible study with id \(bibleStudyId)")
+                }
+            } catch {
+                print("Error updating bible study: \(error.localizedDescription)")
+            }
+        }
+    }
+
     
     func getUser(username: String, passwordHash: String) async -> User? {
         if db == nil {
@@ -85,16 +145,17 @@ class MongoDBManager {
     func createUser(user: User) async {
         if db == nil {
             print("Error: database is nil")
-        }
-        
-        let usersCollection = db!["Users"]
-        
-        let newUser: Document = ["id": user.id, "username": user.username, "passwordHash": user.passwordHash, "fname": user.fname, "lname": user.lname]
-        
-        do {
-            try await usersCollection.insert(newUser)
-        } catch {
-            print("Error inserting bible study: \(error.localizedDescription)")
+        } else {
+            
+            let usersCollection = db!["Users"]
+            
+            let newUser: Document = ["id": user.id, "username": user.username, "passwordHash": user.passwordHash, "fname": user.fname, "lname": user.lname]
+            
+            do {
+                try await usersCollection.insert(newUser)
+            } catch {
+                print("Error inserting bible study: \(error.localizedDescription)")
+            }
         }
     }
     

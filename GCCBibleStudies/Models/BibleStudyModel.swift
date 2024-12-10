@@ -17,6 +17,8 @@ struct BibleStudy: Identifiable, Decodable {
     var time: String
     var day: String
     var organizer: String
+    var organizerId: Int
+    var participants: [Int]
 }
 
 struct User: Identifiable, Decodable {
