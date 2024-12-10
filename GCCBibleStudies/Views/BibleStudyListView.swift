@@ -10,23 +10,27 @@ import SwiftUI
 struct BibleStudyListView: View {
     @EnvironmentObject var VM: ViewModel
     
-    @State var searchText: String = ""
+    @StateObject var SVM: SearchViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            NavigationStack {
-                ScrollView {
-                    ForEach(VM.bibleStudies) { bibleStudy in
-                        BibleStudyView(bs: bibleStudy)
-                    }
+        ScrollView {
+            VStack(spacing:20) {
+                ForEach(VM.bibleStudies) { bibleStudy in
+                    BibleStudyView(bs: bibleStudy)
                 }
-            }.searchable(text: $searchText)
-        }.onAppear() {
+            }
+        }
+        .searchable(text: $SVM.searchtext,placement: .automatic,prompt: Text("Search Bible Studies..."))
+        .navigationTitle(VM.currentUser != nil ? "Welcome \(VM.currentUser!.fname)" : "Welcome Guest")
+        .onAppear() {
             VM.getBibleStudies()
         }
     }
 }
 
+
 #Preview {
-    BibleStudyListView().environmentObject(ViewModel())
+    var VM = ViewModel()
+    BibleStudyListView(SVM:SearchViewModel(viewmodel:VM))
+        .environmentObject(VM)
 }

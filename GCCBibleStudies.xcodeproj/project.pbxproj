@@ -11,10 +11,12 @@
 		2C37C0D52D010BEF00E94288 /* MongoClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D42D010BEF00E94288 /* MongoClient */; };
 		2C37C0D72D010BEF00E94288 /* MongoCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D62D010BEF00E94288 /* MongoCore */; };
 		2C37C0D92D010BEF00E94288 /* MongoKitten in Frameworks */ = {isa = PBXBuildFile; productRef = 2C37C0D82D010BEF00E94288 /* MongoKitten */; };
+		33CAFFF22D06741100D04B3D /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CAFFF12D06741100D04B3D /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2CD4BB5B2CEC19ED003E372F /* GCCBibleStudies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCCBibleStudies.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33CAFFF12D06741100D04B3D /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,6 +45,7 @@
 		2CD4BB522CEC19ED003E372F = {
 			isa = PBXGroup;
 			children = (
+				33CAFFF12D06741100D04B3D /* Secrets.swift */,
 				2CD4BB5D2CEC19ED003E372F /* GCCBibleStudies */,
 				2CD4BB5C2CEC19ED003E372F /* Products */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CAFFF22D06741100D04B3D /* Secrets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
