@@ -49,7 +49,7 @@ struct ProfileView: View {
                         
                     }
                 } else {
-                    Text("You are not logged in. Please restart the app")
+                    Text("You are not logged in. Please restart the app.")
                 }
             }
             .onAppear() {
