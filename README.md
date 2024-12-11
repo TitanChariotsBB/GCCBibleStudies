@@ -2,7 +2,7 @@
 
 ### Requirements Checklist
 
-Swift (10 pts)
+Swift (10 pts) -- **DONE**
 
 - [x] Use computed property and add observers in a class.
 - [x] Use multiple optional variables in an appropriate manner.
