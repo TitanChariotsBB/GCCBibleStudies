@@ -7,23 +7,23 @@ Swift (10 pts)
 - [x] Use computed property and add observers in a class.
 - [x] Use multiple optional variables in an appropriate manner.
    
-UI (Choose at least 6 distinct options) (5 pts each)
+UI (Choose at least 6 distinct options) (5 pts each) -- **DONE**
 
 - [x] Navigation View
 - [x] Tab View
 - [x] List View
 - [ ] Map View
-- [ ] Web View -- Maybe we can link to biblegateway or something
-- [ ] Gallery View
+- [ ] Web View
+- [x] Gallery View
 - [x] Sheet View
 - [x] Onboarding View 
 - [ ] Picker View 
 
-Data (Choose 1) (10 pts)
+Data (Choose 1) (10 pts) -- **DONE**
 
 - [x] Parse Local/Web Data (JSON)
 - [x] Database 
-- [x] Notification Center
+- [ ] Notification Center
 - [ ] Local File Storage (write / read)
    
 Other Topics (Choose 1 – 2 ) ([10 – 20] pts), you can also choose three 
