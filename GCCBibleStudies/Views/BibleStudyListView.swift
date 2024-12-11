@@ -20,6 +20,7 @@ struct BibleStudyListView: View {
                     ForEach((VM.searchtext.isEmpty ? VM.allBibleStudies : VM.filteredBibleStudies).sorted(by: {$0.title < $1.title})) { bibleStudy in
                         BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
                     }
+                    if(!VM.searchtext.isEmpty && VM.filteredBibleStudies.isEmpty) {Text("No Bible studies found")}
                 }
             }
             .searchable(text: $VM.searchtext,placement: .automatic,prompt: Text("Search Bible Studies..."))
@@ -30,7 +31,7 @@ struct BibleStudyListView: View {
                         .tag(scope)
                 }
             })
-            .navigationTitle("Find a bible study")
+            .navigationTitle("Find a Bible study")
         }
         .onAppear() {
             VM.getBibleStudies()
