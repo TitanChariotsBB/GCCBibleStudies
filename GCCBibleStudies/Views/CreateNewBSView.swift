@@ -31,8 +31,6 @@ struct CreateNewBSView: View {
     
     @State var category: Categories = .all
     
-    @State var createAlert: Bool = false
-    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Create New Bible Study").font(.largeTitle).bold().padding(.bottom, 40)
@@ -77,10 +75,6 @@ struct CreateNewBSView: View {
                 }
             }
             
-            Toggle(isOn: $createAlert) {
-                Text("Set reminder")
-            }
-            
             HStack {
                 Spacer()
                 Button {
@@ -99,10 +93,6 @@ struct CreateNewBSView: View {
                         organizerId: VM.currentUser?.id ?? 0,
                         participants: []
                     ))
-                    
-                    if createAlert {
-                        VM.createNotification(id: bibleStudyID, title: name, day: day.rawValue, time: date.formatted(date: .omitted, time: .shortened))
-                    }
                     
                     //reset fields
                     name = ""
