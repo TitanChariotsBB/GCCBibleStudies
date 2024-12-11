@@ -80,6 +80,20 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func deleteBibleStudy(bibleStudyId: Int) {
+        if mm.isConnected {
+            Task {
+                await mm.deleteBibleStudy(bibleStudyId: bibleStudyId)
+                
+                let studies = await mm.getBibleStudies()
+                
+                await MainActor.run {
+                    self.allBibleStudies = studies
+                }
+            }
+        }
+    }
+    
     func joinBibleStudy(bibleStudyId: Int, userId: Int) {
         if mm.isConnected {
             Task {

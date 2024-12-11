@@ -26,7 +26,10 @@ struct ProfileView: View {
                     ScrollView {
                         Text("Bible studies you've created").font(.title2).bold()
                         ForEach(VM.getBibleStudiesCreated()) { bibleStudy in
-                            BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
+                            ZStack {
+                                BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
+                                DeleteBSButtonView(bs: bibleStudy)
+                            }
                         }
                         Button {
                             showCreateForm = true

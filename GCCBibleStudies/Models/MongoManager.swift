@@ -59,6 +59,21 @@ class MongoDBManager {
         }
     }
     
+    func deleteBibleStudy(bibleStudyId: Int) async {
+        if db == nil {
+            print("Error: database is nil")
+        } else {
+            
+            let bibleStudiesCollection = db!["BibleStudies"]
+            
+            do {
+                try await bibleStudiesCollection.deleteOne(where: ["id": bibleStudyId])
+            } catch {
+                print("Unable to find bible study with id \(bibleStudyId): \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func joinBibleStudy(bibleStudyId: Int, userId: Int) async {
         if db == nil {
             print("Error: database is nil")
