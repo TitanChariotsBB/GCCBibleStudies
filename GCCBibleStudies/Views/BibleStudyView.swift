@@ -18,7 +18,6 @@ struct BibleStudyView: View {
     }
     
     var body: some View {
-        // gp for geometry proxy
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(.white)
@@ -33,18 +32,18 @@ struct BibleStudyView: View {
                 Text("Location: \(bs.location)")
                 Text("Meeting time: \(meetingTime)")
                 Text("Category: \(bs.category)")
-//                    Text("Organizer: \(bs.organizer)")
-//                    Text("Number of participants: \(bs.participants.count)")
+                //                    Text("Organizer: \(bs.organizer)")
+                //                    Text("Number of participants: \(bs.participants.count)")
                 HStack {
                     Button {
-                       if VM.currentUser != nil {
-                          if joined {
-                              VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
-                          } else {
-                              VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
-                          }
-                          joined.toggle()
-                       }
+                        if VM.currentUser != nil {
+                            if joined {
+                                VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                            } else {
+                                VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                            }
+                            joined.toggle()
+                        }
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
@@ -56,16 +55,15 @@ struct BibleStudyView: View {
                             }
                         }
                     }
-                    
-                    Button {
-                        // onClick
-                    } label: {
+                    NavigationLink(destination: {
+                        BSDetailsView(bs: bs)
+                    }, label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(Color.blue).frame(width: 100, height: 30)
                             Text("Details").bold().foregroundStyle(.white)
                         }
-                    }
+                    })
                     Spacer()
                 }
             }.padding(20)
