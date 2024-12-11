@@ -19,60 +19,57 @@ struct BibleStudyView: View {
     
     var body: some View {
         // gp for geometry proxy
-        GeometryReader { gp in
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.white)
-                    .shadow(radius: 5)
-                VStack(alignment: .leading) {
-                    Text(bs.title).font(.largeTitle).bold().padding(.bottom, 5)
-                    Text(bs.description).font(.title2)
-                    Text("Book: \(bs.bookOfTheBible)").font(.title2).padding(.vertical, 5)
-                    /*if bs.bookOfTheBible != nil {
-                     Text("Book: \(bs.bookOfTheBible)").font(.title2).padding(.bottom, 5)
-                     }*/
-                    Text(bs.location).font(.title2)
-                    Text(meetingTime).font(.title2)
-                    Text(bs.category).font(.title2)
-                    Text("Organizer: \(bs.organizer)").font(.title2)
-                    Text("Number of participants: \(bs.participants.count)")
-                    HStack {
-                        Button {
-                           if VM.currentUser != nil {
-                              if joined {
-                                  VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
-                              } else {
-                                  VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
-                              }
-                              joined.toggle()
-                           }
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.blue).frame(width: 80, height: 30)
-                                if joined {
-                                    Text("Leave").bold().foregroundStyle(.white)
-                                } else {
-                                    Text("Join").bold().foregroundStyle(.white)
-                                }
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.white)
+                .shadow(radius: 5)
+            VStack(alignment: .leading) {
+                Text(bs.title).font(.title).bold()
+                Text(bs.description)
+                Text("Book: \(bs.bookOfTheBible)")
+                /*if bs.bookOfTheBible != nil {
+                 Text("Book: \(bs.bookOfTheBible)").font(.title2).padding(.bottom, 5)
+                 }*/
+                Text("Location: \(bs.location)")
+                Text("Meeting time: \(meetingTime)")
+                Text("Category: \(bs.category)")
+//                    Text("Organizer: \(bs.organizer)")
+//                    Text("Number of participants: \(bs.participants.count)")
+                HStack {
+                    Button {
+                       if VM.currentUser != nil {
+                          if joined {
+                              VM.leaveBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                          } else {
+                              VM.joinBibleStudy(bibleStudyId: bs.id, userId: VM.currentUser!.id)
+                          }
+                          joined.toggle()
+                       }
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.blue).frame(width: 80, height: 30)
+                            if joined {
+                                Text("Leave").bold().foregroundStyle(.white)
+                            } else {
+                                Text("Join").bold().foregroundStyle(.white)
                             }
                         }
-                        
-                        Button {
-                            // onClick
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.blue).frame(width: 100, height: 30)
-                                Text("Details").bold().foregroundStyle(.white)
-                            }
-                        }
-                        Spacer()
                     }
-                }.padding(.leading).padding(.bottom,10).padding(.top,5)
-            }.padding(8)
-        }
-        .padding()
+                    
+                    Button {
+                        // onClick
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.blue).frame(width: 100, height: 30)
+                            Text("Details").bold().foregroundStyle(.white)
+                        }
+                    }
+                    Spacer()
+                }
+            }.padding(20)
+        }.frame(height: 250)
         .onAppear() {
             if VM.currentUser != nil {
                 joined = bs.participants.contains(VM.currentUser!.id)

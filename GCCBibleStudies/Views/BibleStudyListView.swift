@@ -16,9 +16,9 @@ struct BibleStudyListView: View {
         // show without it
         NavigationStack {
             ScrollView {
-                VStack(spacing:320) {
+                VStack {
                     ForEach((VM.searchtext.isEmpty ? VM.allBibleStudies : VM.filteredBibleStudies).sorted(by: {$0.title < $1.title})) { bibleStudy in
-                        BibleStudyView(bs: bibleStudy)
+                        BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
                     }
                 }
             }
@@ -30,7 +30,7 @@ struct BibleStudyListView: View {
                         .tag(scope)
                 }
             })
-            .navigationTitle(VM.currentUser != nil ? "Welcome \(VM.currentUser!.fname)" : "Welcome Guest")
+            .navigationTitle("Find a bible study")
         }
         .onAppear() {
             VM.getBibleStudies()

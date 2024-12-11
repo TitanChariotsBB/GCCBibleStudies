@@ -18,14 +18,14 @@ struct ProfileView: View {
         VStack(alignment: .leading) {
             if VM.currentUser != nil {
                 VStack(alignment: .leading) {
-                    Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold()
+                    Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding(.vertical, 15)
                     Text("Username: \(VM.currentUser!.username)")
                     Text("ID: \(VM.currentUser!.id)")
                 }.padding()
                 ScrollView {
                     Text("Bible studies you've created").font(.title2).bold()
                     ForEach(VM.getBibleStudiesCreated()) { bibleStudy in
-                        BibleStudyView(bs: bibleStudy)
+                        BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
                     }
                     Button {
                         showCreateForm = true
@@ -35,7 +35,7 @@ struct ProfileView: View {
                     
                     Text("Bible studies you're joined").font(.title2).bold()
                     ForEach(VM.getBibleStudiesJoined()) { bibleStudy in
-                        BibleStudyView(bs: bibleStudy)
+                        BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
                     }
                     Button {
                         tabSelection = 1
