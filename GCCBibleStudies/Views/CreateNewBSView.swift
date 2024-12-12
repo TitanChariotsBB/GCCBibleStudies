@@ -11,6 +11,7 @@ struct CreateNewBSView: View {
     @EnvironmentObject var VM: ViewModel
     
     @Binding var showCreateNewBS: Bool
+    @Binding var showconfetti: Bool
     
     enum Days: String, CaseIterable {
         case monday, tuesday, wednesday, thursday, friday, saturday, sunday
@@ -78,6 +79,7 @@ struct CreateNewBSView: View {
             HStack {
                 Spacer()
                 Button {
+                    let _ = print("showconfetti:",showconfetti)
                     let bibleStudyID = Int.random(in: 0..<1000000)
                     
                     VM.createNewBibleStudy(bibleStudy: BibleStudy(
@@ -104,7 +106,8 @@ struct CreateNewBSView: View {
                     category = .all
                     
                     showCreateNewBS = false
-                    
+                    showconfetti = true
+                    let _ = print("showconfetti:",showconfetti)
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
@@ -138,6 +141,7 @@ struct CreateNewBSView: View {
 }
 
 #Preview {
+    @State var showconfetti = false
     @State var showCreateNewBS: Bool = true
-    CreateNewBSView(showCreateNewBS: $showCreateNewBS).environmentObject(ViewModel())
+    CreateNewBSView(showCreateNewBS: $showCreateNewBS,showconfetti: $showconfetti).environmentObject(ViewModel())
 }

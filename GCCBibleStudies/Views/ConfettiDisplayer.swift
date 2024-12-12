@@ -23,8 +23,8 @@ struct ConfettiDisplayer: ViewModifier {
         }
     }
     
-    let animationtime = 1.0
-    let fadetime = 0.5
+    let animationtime = 3.0
+    let fadetime = 2.0
     
     func body(content:Content) ->some View {
         if #available(iOS 17.0, *) {
@@ -51,7 +51,7 @@ struct ConfettiDisplayer: ViewModifier {
                 opacity = 0
             }
         }
-        catch {}
+        catch {print(error)}
     }
 }
 

@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct ProfileView: View {
+    var testing:Bool
     @EnvironmentObject var VM: ViewModel
     
     @State var showCreateForm: Bool = false
+    @State var showconfetti:Bool = false
     
     @Binding var tabSelection: Int
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
+                let _ = showconfetti
                 if VM.currentUser != nil {
                     VStack(alignment: .leading) {
                         Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding(.vertical, 15)
@@ -53,16 +56,20 @@ struct ProfileView: View {
                 }
             }
             .onAppear() {
+                if testing {
+                    VM.currentUser = User(id: 8972, username: "Christian", passwordHash: "e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a", fname: "Christian", lname: "Abbott")
+                }
                 VM.getBibleStudies()
             }
             .sheet(isPresented: $showCreateForm) {
-                CreateNewBSView(showCreateNewBS: $showCreateForm)
+                CreateNewBSView(showCreateNewBS: $showCreateForm,showconfetti: $showconfetti)
             }
+            .displayConfetti(active: $showconfetti)
         }
     }
 }
 
 #Preview {
     @State var tabSelection = 1
-    ProfileView(tabSelection: $tabSelection).environmentObject(ViewModel())
+    ProfileView(testing:true,tabSelection: $tabSelection).environmentObject(ViewModel())
 }
