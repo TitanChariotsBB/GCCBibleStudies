@@ -21,7 +21,7 @@ struct MainView: View {
                     Text("Bible Studies")
                 }.tag(1)
                 
-                ProfileView(tabSelection: $tabSelection).tabItem {
+                ProfileView(testing:false,tabSelection: $tabSelection).tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")
                 }.tag(2)
