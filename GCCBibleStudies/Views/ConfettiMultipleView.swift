@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ConfettiMultipleView: View {
-    var count:Int = 50
+    var count:Int = 30
     @State var ypos:CGFloat = 0
     var body: some View {
         ZStack {
             ForEach(0..<count,id:\.self) { _ in
-                ConfettiPieceView().position(x:CGFloat.random(in: 0...UIScreen.main.bounds.width), y: ypos != 0 ? CGFloat.random(in: 0...UIScreen.main.bounds.height) : ypos
+                ConfettiPieceView().position(x:CGFloat.random(in: 0...UIScreen.main.bounds.width), y: ypos != 0 ? CGFloat.random(in: 0...UIScreen.main.bounds.height/2) : ypos
                 )
             }
         }
-        .ignoresSafeArea()
+        //.ignoresSafeArea()
         .onAppear {
             ypos = CGFloat.random(in: 0...UIScreen.main.bounds.height)
         }

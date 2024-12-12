@@ -1,9 +1,5 @@
-//
-//  ConfettiDisplayer.swift
-//  GCCBibleStudies
-//
-//  Created by Nathanael Kuhns on 12/11/24.
-//
+// ended up not actually using this
+
 
 import SwiftUI
 
@@ -23,11 +19,13 @@ struct ConfettiDisplayer: ViewModifier {
         }
     }
     
-    let animationtime = 1.0
-    let fadetime = 0.5
+    let animationtime = 3.0
+    let fadetime = 2.0
     
     func body(content:Content) ->some View {
+        let _ = print("body entered!")
         if #available(iOS 17.0, *) {
+            let _ = print("body if entered")
             content
                 .overlay(active ? ConfettiMultipleView().opacity(opacity) : nil)
                 .sensoryFeedback(.success, trigger: active)
@@ -36,7 +34,9 @@ struct ConfettiDisplayer: ViewModifier {
                 }
         }
         else {
-            content.overlay(active ? ConfettiMultipleView().opacity(opacity) : nil)
+            let _ = print("body else entered")
+            content
+                .overlay(active ? ConfettiMultipleView().opacity(opacity) : nil)
                 .task {
                     await handleAnimationSequence()
                 }
@@ -45,13 +45,15 @@ struct ConfettiDisplayer: ViewModifier {
     
     private func handleAnimationSequence() async {
         do {
-            // wait for animationtime seconds
+            print("handleAnimationCalled!")
+            // what's happening right now is that for animation time the confetti will work
+            // wait for animationtime seconds and then fade out
             try await Task.sleep(nanoseconds: UInt64(animationtime * 1_000_000_000))
             withAnimation(.easeOut(duration:fadetime)) {
                 opacity = 0
             }
         }
-        catch {}
+        catch {print(error)}
     }
 }
 
