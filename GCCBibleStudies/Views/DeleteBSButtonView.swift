@@ -13,13 +13,15 @@ struct DeleteBSButtonView: View {
     
     var bs: BibleStudy
     
+    @Binding var isShowingDialog: Bool
+    
     var body: some View {
         VStack {
             Spacer()
             HStack {
                 Spacer()
                 Button {
-                    VM.deleteBibleStudy(bibleStudyId: bs.id)
+                    isShowingDialog = true
                 } label: {
                     Image(systemName: "trash").resizable().frame(width: 30, height: 30).foregroundStyle(.red).padding(40)
                 }
