@@ -16,13 +16,16 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
+            VStack {
                 if VM.currentUser != nil {
-                    VStack(alignment: .leading) {
-                        Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding(.vertical, 15)
-                        Text("Username: \(VM.currentUser!.username)")
-                        Text("ID: \(VM.currentUser!.id)")
-                    }.padding()
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding(.vertical, 15)
+                            Text("Username: \(VM.currentUser!.username)")
+                            Text("ID: \(VM.currentUser!.id)")
+                        }.padding()
+                        Spacer()
+                    }
                     ScrollView {
                         Text("Bible studies you've created").font(.title2).bold()
                         ForEach(VM.getBibleStudiesCreated()) { bibleStudy in

@@ -32,6 +32,7 @@ struct CreateNewAccount: View {
                 .frame(width:360)
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
+                .textContentType(.username)
             SecureField(text: $password) {
                 Text("New password")
             }.textFieldStyle(.roundedBorder)
@@ -39,6 +40,7 @@ struct CreateNewAccount: View {
                 .frame(width:360)
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
+                .textContentType(.newPassword)
             SecureField(text: $confirmPassword) {
                 Text("Confirm password")
             }.textFieldStyle(.roundedBorder)
@@ -46,6 +48,7 @@ struct CreateNewAccount: View {
                 .frame(width:360)
                 .autocapitalization(.none)
                 .autocorrectionDisabled()
+                .textContentType(.password)
             TextField(text: $fname) {
                 Text("First name")
             }.textFieldStyle(.roundedBorder)
