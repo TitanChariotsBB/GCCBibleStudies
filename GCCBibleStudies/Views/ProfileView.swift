@@ -62,7 +62,6 @@ struct ProfileView: View {
                             Text("Bible studies you're joined").font(.title2).bold()
                             ForEach(VM.getBibleStudiesJoined()) { bibleStudy in
                                 BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
-                                DeleteBSButtonView(bs: bibleStudy, isShowingDialog: $isShowingDialog)
                             }
                             Button {
                                 tabSelection = 1
