@@ -19,6 +19,8 @@ struct ProfileView: View {
     @State var showCreateForm: Bool = false
 
     
+    @State var isShowingDialog: Bool = false
+    
     @Binding var tabSelection: Int
     
     var body: some View {
@@ -50,6 +52,15 @@ struct ProfileView: View {
                             Text("Bible studies you're joined").font(.title2).bold()
                             ForEach(VM.getBibleStudiesJoined()) { bibleStudy in
                                 BibleStudyView(bs: bibleStudy).padding(.horizontal, 15).padding(.bottom, 15)
+                                DeleteBSButtonView(bs: bibleStudy, isShowingDialog: $isShowingDialog)
+                            }.confirmationDialog("Are you sure you want to delete this bible study?", isPresented: $isShowingDialog) {
+                                Button("Delete", role: .destructive) {
+                                    VM.deleteBibleStudy(bibleStudyId: bibleStudy.id)
+                                    isShowingDialog = false
+                                }
+                                Button("Cancel", role: .cancel) {
+                                    isShowingDialog = false
+                                }
                             }
                             Button {
                                 tabSelection = 1

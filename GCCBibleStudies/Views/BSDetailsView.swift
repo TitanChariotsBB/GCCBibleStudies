@@ -11,7 +11,6 @@ struct BSDetailsView: View {
     
     @EnvironmentObject var VM: ViewModel
     @State var joinButtonDisabled: Bool = true
-    @State var joined: Bool = false
     
     @State var showWebView: Bool = false
     
@@ -20,6 +19,8 @@ struct BSDetailsView: View {
     }
     
     var bs: BibleStudy
+    
+    @Binding var joined: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -67,12 +68,10 @@ struct BSDetailsView: View {
         .sheet(isPresented: $showWebView) {
             WebView(urlString: "https://www.biblegateway.com/quicksearch/?quicksearch=\(bs.bookOfTheBible)&version=ESV")
         }
-        .onAppear() {
-            VM.getBibleStudies()
-        }
     }
 }
 
 #Preview {
-    BSDetailsView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott", organizerId: 0, participants: [0])).environmentObject(ViewModel())
+    @State var joined: Bool = false
+    BSDetailsView(bs: BibleStudy(id: 0, title: "Romans Bible Study", location: "Hopeman 325", description: "A study of the Bible that focuses on the teachings of the Apostle Paul.", bookOfTheBible: "Romans", category: "Men's", time: "6:00 PM", day: "Tuesday", organizer: "Christian Abbott", organizerId: 0, participants: [0]), joined: $joined).environmentObject(ViewModel())
 }

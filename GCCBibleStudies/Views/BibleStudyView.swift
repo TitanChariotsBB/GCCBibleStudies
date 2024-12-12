@@ -56,7 +56,7 @@ struct BibleStudyView: View {
                         }
                     }
                     NavigationLink(destination: {
-                        BSDetailsView(bs: bs)
+                        BSDetailsView(bs: bs, joined: $joined)
                     }, label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
