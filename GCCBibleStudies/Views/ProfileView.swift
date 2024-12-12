@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State var confettiseconds:Int = 2
+    @State var confquarterseconds:Int = 4
     @State var showconfetti:Bool = false
-    let countdown = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var confopacity:Double = 0.0
+    let countdown = Timer.publish(every: 0.25, on: .main, in: .common).autoconnect()
     
     var testing:Bool
     @EnvironmentObject var VM: ViewModel
@@ -23,7 +24,9 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                VStack(alignment: .leading) {
+                VStack {
+                    // empty text to push the rest of the VStack down
+                    Text("").padding(.bottom)
                     if VM.currentUser != nil {
                         VStack(alignment: .leading) {
                             Text("Welcome, \(VM.currentUser!.fname)").font(.largeTitle).bold().padding(.vertical, 15)
@@ -53,11 +56,12 @@ struct ProfileView: View {
                             } label: {
                                 Text("Find bible studies to join")
                             }.padding(.bottom, 10)
-                            
                         }
                     } else {
                         Text("You are not logged in. Please restart the app.")
                     }
+                    // added this text and it seems to fix the scrolling issues
+                    Text("").padding(.top,60)
                 }
                 .onAppear() {
                     if testing {
@@ -67,7 +71,7 @@ struct ProfileView: View {
                 }
                 .sheet(isPresented: $showCreateForm) {
                     CreateNewBSView(showCreateNewBS: $showCreateForm,showconfetti: $showconfetti)
-                }.offset(y:50)
+                }
                 /*
                  found that this offset kept the view
                  at just about the right spot with the
@@ -75,15 +79,23 @@ struct ProfileView: View {
                  */
                 //.displayConfetti(active: $showconfetti)
                 ConfettiMultipleView().onReceive(countdown) { _ in
-                        //print(confettiseconds)
-                        if confettiseconds > 0 {
-                            confettiseconds -= 1
+                        //print(confquarterseconds)
+                        if confquarterseconds > 0 && showconfetti {
+                            if confquarterseconds == 4 {
+                                confopacity = 1.0
+                            }
+                            else {
+                                confopacity -= 0.25
+                            }
+                            confquarterseconds -= 1
                         }
-                        else {
-                            confettiseconds = 1
+                        else if confquarterseconds == 0 {
+                            confquarterseconds = 4
                             showconfetti = false
                         }
-                }.opacity(showconfetti ? 1 : 0).offset(y:-50)
+                }
+                .opacity(showconfetti ? confopacity : 0)
+                .offset(y:-20)
             }
         }
     }
