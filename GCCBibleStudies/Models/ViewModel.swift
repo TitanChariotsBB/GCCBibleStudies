@@ -183,7 +183,7 @@ class ViewModel: ObservableObject {
         }
         
         filteredBibleStudies = allBibleStudies.filter({ bibstud in
-            return (currentsearchscope == .any || SearchScopeOption.strtoop(str:bibstud.category) == currentsearchscope) && (attrhas(attr: bibstud.title, has: searchtext) || attrhas(attr: bibstud.category, has: searchtext) || attrhas(attr: bibstud.day, has: searchtext) || attrhas(attr: bibstud.description, has: searchtext) || attrhas(attr: bibstud.location, has: searchtext) || attrhas(attr: bibstud.organizer, has: searchtext) || attrhas(attr: bibstud.time, has: searchtext))
+            return (currentsearchscope == .any || SearchScopeOption.strtoop(str:bibstud.category) == currentsearchscope) && (attrhas(attr: bibstud.title, has: searchtext) || attrhas(attr: bibstud.category, has: searchtext) || attrhas(attr: bibstud.day, has: searchtext) || attrhas(attr: bibstud.description, has: searchtext) || attrhas(attr: bibstud.location, has: searchtext) || attrhas(attr: bibstud.organizer, has: searchtext) || attrhas(attr: bibstud.time, has: searchtext) || attrhas(attr: bibstud.bookOfTheBible, has: searchtext))
         })
     }
     
