@@ -14,6 +14,8 @@ struct ConfettiTester: View {
             Button {
                 showconfetti = true
             } label: {
+                //Text("\(showconfetti)")
+                Spacer()
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             }
         }.displayConfetti(active: $showconfetti)
