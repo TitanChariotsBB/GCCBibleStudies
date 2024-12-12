@@ -62,8 +62,13 @@ struct BSDetailsView: View {
                 }
             }
             Spacer()
-        }.padding().sheet(isPresented: $showWebView) {
+        }
+        .padding()
+        .sheet(isPresented: $showWebView) {
             WebView(urlString: "https://www.biblegateway.com/quicksearch/?quicksearch=\(bs.bookOfTheBible)&version=ESV")
+        }
+        .onAppear() {
+            VM.getBibleStudies()
         }
     }
 }
